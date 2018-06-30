@@ -1,0 +1,51 @@
+
+<div class="employee">
+  <h2>Employee-Detail</h2>
+</div>
+<div class="margin-top">
+<mat-form-field class="mt-2">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+
+<div class="mat-elevation-z8">
+    <mat-table matSort  [dataSource]="dataSource">
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element"> {{element.ename}} </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="designation">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Designation </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element"> {{element.desig}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="mobile-Number">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Mobile-Number </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element"> {{element.mob}} </mat-cell>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employer">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Employer </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element" (click)="showManagerInfo(element)" class="manager-detail"> {{element.mgrname}} </mat-cell>
+        </ng-container> 
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row >
+    </mat-table>
+  </div>
+  
+  <mat-paginator [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+    </mat-paginator>
+    
