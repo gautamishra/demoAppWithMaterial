@@ -38,7 +38,7 @@
 
       <ng-container matColumnDef="employer">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Employer </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let element" (click)="showManagerInfo(element)" class="manager-detail"> {{element.mgrname}} </mat-cell>
+          <mat-cell mat-cell *matCellDef="let element"  matTooltip="Manager detail" (click)="showManagerInfo(element)" class="manager-detail"> {{element.mgrname}} </mat-cell>
         </ng-container> 
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

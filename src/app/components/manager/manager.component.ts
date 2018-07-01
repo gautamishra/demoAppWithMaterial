@@ -1,26 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
-
-interface Managerdetail {
-  mid: number;
-  mgname: string;
-  mob: string;
-  email: string;
-  loc: string;
-}
-
-interface EmployeeDetail {
-  eid: number;
-  ename: string;
-  desig: string;
-  mob: number;
-  email: string;
-  loc: string;
-  mgrname: string;
-  mid: number;
-}
-
+import { Managerdetail } from '../../modals/manager-modal';
+import { EmployeeDetail } from '../../modals/employe-modal';
+import {employeesData} from './../../constants/employee-info';
+import { managers } from './../../constants/manager-info';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-manager',
@@ -32,59 +17,11 @@ export class ManagerComponent implements OnInit , AfterViewInit {
   private managerId: number;
   public selectedManager: Managerdetail;
   public associatedEmployess: EmployeeDetail[];
-
+  selectedEmployee: EmployeeDetail;
+  editEmployee = false;
   displayedColumns: string[] = ['name', 'designation', 'mobile-Number', 'email' , 'edit'];
   dataSource: any;
 
-   employeesData: EmployeeDetail[] = [
-    {
-      eid: 1, ename: 'employee_1', desig: 'developer', mob: 9471931608,
-      email: 'employee1@gmail.com', loc: 'saharsa_1', mgrname: 'manager1', mid: 1
-    },
-    {
-      eid: 1, ename: 'employee_2', desig: 'developer', mob: 9371932347,
-      email: 'employee2@gmail.com', loc: 'saharsa_2', mgrname: 'manager2', mid: 2
-    },
-    {
-      eid: 1, ename: 'employee_3', desig: 'programmer', mob: 8871931623,
-      email: 'employee3@gmail.com', loc: 'saharsa_3', mgrname: 'manager4', mid: 4
-    },
-    {
-      eid: 1, ename: 'employee_4', desig: 'developer', mob: 9477771608,
-      email: 'employee4@gmail.com', loc: 'saharsa_4', mgrname: 'manager4', mid: 4
-    },
-    {
-      eid: 1, ename: 'employee_5', desig: 'programmer', mob: 9471881611, email:
-        'employee5@gmail.com', loc: 'saharsa_5', mgrname: 'manager3', mid: 3
-    },
-    {
-      eid: 1, ename: 'employee_6', desig: 'programmer', mob: 9471931608,
-      email: 'employee6@gmail.com', loc: 'saharsa_6', mgrname: 'manager3', mid: 3
-    },
-    {
-      eid: 1, ename: 'employee_7', desig: 'designer', mob: 9471931608,
-      email: 'employee7@gmail.com', loc: 'saharsa_7', mgrname: 'manager3', mid: 3
-    },
-    {
-      eid: 1, ename: 'employee_8', desig: 'designer', mob: 9471931123,
-      email: 'employee8@gmail.com', loc: 'saharsa_8', mgrname: 'manager1', mid: 1
-    },
-    {
-      eid: 1, ename: 'employee_9', desig: 'developer', mob: 9471931656,
-      email: 'employee9@gmail.com', loc: 'saharsa_9', mgrname: 'manager2', mid: 2
-    },
-    {
-      eid: 1, ename: 'employee_10', desig: 'designer', mob: 9471931543,
-      email: 'employee10@gmail.com', loc: 'saharsa_10', mgrname: 'manager1', mid: 1
-    }
-  ];
-
-  managers: Managerdetail[] = [
-    { mid: 1, mgname: 'manager1', mob: '9471931157', email: 'manager1@gmail.com', loc: 'Hyd_1' },
-    { mid: 2, mgname: 'manager2', mob: '9371931333', email: 'manager2@gmail.com', loc: 'Pune_2' },
-    { mid: 3, mgname: 'manager3', mob: '9171931123', email: 'manager3@gmail.com', loc: 'Patna_3' },
-    { mid: 4, mgname: 'manager4', mob: '9671931321', email: 'manager4@gmail.com', loc: 'Delhi_4' }
-  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -100,12 +37,12 @@ export class ManagerComponent implements OnInit , AfterViewInit {
   }
 
   getSelectedManagerDetails = () => {
-    this.selectedManager = this.managers.find((mgr) => mgr.mid === +this.managerId);
+    this.selectedManager = managers.find((mgr) => mgr.mid === +this.managerId);
     console.log(this.selectedManager);
   }
 
   getAssociatedEmployees = () => {
-    this.associatedEmployess = this.employeesData.filter((emp) => emp.mid === +this.managerId);
+    this.associatedEmployess = employeesData.filter((emp) => emp.mid === +this.managerId);
     this.dataSource = new MatTableDataSource(this.associatedEmployess);
   }
 
@@ -114,7 +51,20 @@ export class ManagerComponent implements OnInit , AfterViewInit {
   }
 
   editDetail = (employee: EmployeeDetail) => {
-    console.log(employee);
+    this.selectedEmployee = _.cloneDeep(employee);
+    this.editEmployee = true;
   }
 
+  saveDetails = () => {
+    this.associatedEmployess.map((emp) => {
+      if ( emp.eid === this.selectedEmployee.eid ) {
+        emp.desig = this.selectedEmployee.desig;
+        emp.email = this.selectedEmployee.email;
+        emp.loc = this.selectedEmployee.loc;
+        emp.ename = this.selectedEmployee.ename;
+        emp.mob = this.selectedEmployee.mob;
+      }
+    });
+    this.editEmployee = false;
+  }
 }
