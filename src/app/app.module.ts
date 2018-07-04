@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {MaterialModule} from './material-module';
-import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,8 +21,7 @@ import { ManagementService } from './services/management.service';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule,
-    FormsModule
+    MaterialModule
   ],
   providers: [
     ManagementService

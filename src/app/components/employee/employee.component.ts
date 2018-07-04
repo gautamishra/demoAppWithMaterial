@@ -16,7 +16,7 @@ import {employeesData} from './../../constants/employee-info';
 
 export class EmployeeComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['name', 'designation', 'mobile-Number', 'email', 'employer'];
+  displayedColumns: string[] = ['ename', 'desig', 'mob', 'email', 'mgrname'];
   dataSource = new MatTableDataSource(employeesData);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

@@ -19,7 +19,7 @@ export class ManagerComponent implements OnInit , AfterViewInit {
   public associatedEmployess: EmployeeDetail[];
   selectedEmployee: EmployeeDetail;
   editEmployee = false;
-  displayedColumns: string[] = ['name', 'designation', 'mobile-Number', 'email' , 'edit'];
+  displayedColumns: string[] = ['ename', 'desig', 'mob', 'email' , 'edit'];
   dataSource: any;
 
 
@@ -38,7 +38,6 @@ export class ManagerComponent implements OnInit , AfterViewInit {
 
   getSelectedManagerDetails = () => {
     this.selectedManager = managers.find((mgr) => mgr.mid === +this.managerId);
-    console.log(this.selectedManager);
   }
 
   getAssociatedEmployees = () => {
